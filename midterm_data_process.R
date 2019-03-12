@@ -32,7 +32,6 @@ e$stop_time_UTC <- gsub(x = e$stop_time_UTC, pattern = "Z", replacement = "")
 e$time_UTC <- gsub(x = e$time_UTC, pattern = "T", replacement = " ")
 e$time_UTC <- gsub(x = e$time_UTC, pattern = "Z", replacement = "")
   
-e <- e[,c(1:4,29,5:26)]
 
 #export data
 write.csv(e, file = "cufes_clean.csv")
