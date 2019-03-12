@@ -28,10 +28,11 @@ e <- read.csv(file = "erdCalCOFIcufes_bb4a_5c83_ad3a.csv", header = T)
 
 #turn these character fields into date-time field
 e$stop_time_UTC <- gsub(x = e$stop_time_UTC, pattern = "T", replacement = " ")
+e$stop_time_UTC <- gsub(x = e$stop_time_UTC, pattern = "Z", replacement = "")
 e$time_UTC <- gsub(x = e$time_UTC, pattern = "T", replacement = " ")
-e$time_UTC <-
+e$time_UTC <- gsub(x = e$time_UTC, pattern = "Z", replacement = "")
   
-  e <- e[,c(1:4,29,5:26)]
+e <- e[,c(1:4,29,5:26)]
 
 #export data
 write.csv(e, file = "cufes_clean.csv")
