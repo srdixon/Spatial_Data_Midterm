@@ -14,8 +14,9 @@ z$Lon_DecDeg <- (z$Lon_Deg + (z$Lon_Min / 60))
 
 # create a date-time field
 z$dateTime <- str_c(z$Tow_Date," ",z$Tow_Time,":00")
-z$dateTime <- as.POSIXct(strptime(z$dateTime, format = "%Y-%m-%d %H:%M:%S", tz = "America/Los_Angeles")) #Hint: look up input time formats for the 'strptime' function
-z$Tow_date <- NULL; z$Tow_time <- NULL
+z$dateTime <- as.POSIXct(strptime(z$dateTime, "%m/%d/%Y %H:%M:%S", tz = "America/Los_Angeles")) #Hint: look up input time formats for the 'strptime' function
+z$Tow_Date <- NULL
+z$Tow_Time <- NULL
 
 #export data as tab delimited file
 write.csv(z, file = "zoop_clean.csv")
@@ -35,8 +36,3 @@ e$time_UTC <-
 #export data
 write.csv(e, file = "cufes_clean.csv")
 
-
-#merge
-zoop_cufes_merge = merge(e, z, by.x="cruise", by.y="Cruise")
-
-write.csv(zoop_cufes_merge, file = "zoop_cufes_total.csv")
