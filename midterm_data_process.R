@@ -10,7 +10,7 @@ z <- z[,which(unlist(lapply(z, function(x)!all(is.na(x)))))] #using the "lapply"
 
 #create new fields with decimal degree latitude and longitude values
 z$Lat_DecDeg <- (z$Lat_Deg + (z$Lat_Min / 60))
-z$Lon_DecDeg <- (z$Lon_Deg + (z$Lon_Min / 60))
+z$Lon_DecDeg <- ((z$Lon_Deg + (z$Lon_Min / 60)) *-1)
 
 # create a date-time field
 z$dateTime <- str_c(z$Tow_Date," ",z$Tow_Time,":00")
@@ -19,7 +19,7 @@ z$Tow_Date <- NULL
 z$Tow_Time <- NULL
 
 #export data as tab delimited file
-write.csv(z, file = "zoop_clean.csv")
+write.table(z, file = "zoop_clean.txt", row.names = F)
 
 #Egg data Set-----
 
@@ -34,5 +34,5 @@ e$time_UTC <- gsub(x = e$time_UTC, pattern = "Z", replacement = "")
   
 
 #export data
-write.csv(e, file = "cufes_clean.csv")
+write.table(e, file = "cufes_clean.txt", row.names = F)
 
