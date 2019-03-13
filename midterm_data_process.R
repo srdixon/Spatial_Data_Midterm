@@ -5,12 +5,12 @@ library(lubridate)
 
 # Macrozooplankton data ----
 #read in  data
-z <- read.csv(file = "195101-201404_Zoop.csv", header = T)
+z <- read.csv(file = "195101-201404_Zoop.csv", header = T, stringsAsFactors = F)
 z <- z[,which(unlist(lapply(z, function(x)!all(is.na(x)))))] #using the "lapply" function from the "dplyr" package, remove fields which contain all "NA" values
 
 #create new fields with decimal degree latitude and longitude values
-z$Lat_DecDeg <- (z$Lat_Deg + (z$Lat_Min / 60))
-z$Lon_DecDeg <- ((z$Lon_Deg + (z$Lon_Min / 60)) *-1)
+z$Lat_DecDeg <- z$Lat_Deg + (z$Lat_Min / 60)
+z$Lon_DecDeg <- (z$Lon_Deg + (z$Lon_Min / 60)) *-1
 
 # create a date-time field
 z$dateTime <- str_c(z$Tow_Date," ",z$Tow_Time,":00")
@@ -19,7 +19,12 @@ z$Tow_Date <- NULL
 z$Tow_Time <- NULL
 
 #export data as tab delimited file
-write.table(z, file = "zoop_clean.txt", row.names = F)
+#write.csv(z, file = "zoopla.csv")
+write.table(z, file = "zoop.txt", row.names = FALSE, sep = "\t")
+
+z1 = z%>% select(c("ID", "Cruise", "Sta_ID", "Tow_DpthM", "Ttl_PVolC3", 
+                   "Sml_PVolC3", "Lat_DecDeg", "Lon_DecDeg", "dateTime"))
+write.table(z1, file = "zoop_cut.txt", row.names = F, sep = "\t")
 
 #Egg data Set-----
 
